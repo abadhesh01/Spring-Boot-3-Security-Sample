@@ -32,10 +32,10 @@ import java.util.Optional;
 public class SecurityConfig {
 
     @Autowired
-    ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     @Autowired
-    SecuredUserRepository repository;
+    private SecuredUserRepository repository;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
