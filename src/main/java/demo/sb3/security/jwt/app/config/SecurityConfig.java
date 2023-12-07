@@ -45,6 +45,7 @@ public class SecurityConfig {
                         authorize.requestMatchers("/users/register").permitAll()
                                 .requestMatchers("/users/**").authenticated()
                 )
+                .authenticationProvider(applicationContext.getBean(AuthenticationProvider.class))
                 .formLogin(formLogin -> {})
                 .build();
     }
