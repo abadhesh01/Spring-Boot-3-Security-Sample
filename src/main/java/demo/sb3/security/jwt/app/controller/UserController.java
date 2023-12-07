@@ -5,6 +5,7 @@ import demo.sb3.security.jwt.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -36,6 +37,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable("id") UUID id, Principal principal) {
         return new ResponseEntity<>(this.service.deleteUser(id, principal), HttpStatus.OK);
     }
@@ -46,6 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Map<String, Object>> getAllUsers() {
         return new ResponseEntity<>(this.service.getAllUsers(), HttpStatus.OK);
     }
