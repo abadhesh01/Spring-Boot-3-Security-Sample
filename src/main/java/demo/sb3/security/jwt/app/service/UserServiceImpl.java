@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new SecuredUserNotFoundException("username", principal.getName()));
         String updatedPassword = password.get("password");
         passwordValidator(SecuredUser.builder().password(updatedPassword).build());
-        currentUser.setPassword(updatedPassword);
+        currentUser.setPassword(updatedPassword.replaceAll("\\s", ""));
         return generateResponse(
                 "Your password has been updated successfully.",
                 this.repository.save(currentUser));
@@ -61,8 +61,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new SecuredUserNotFoundException("id", id.toString()));
         if (user.getRole().equals(UserRole.ADMIN))
             throw new OperationNotAllowedException("User with id='" + id + "' cannot be deleted!");
-        if (user.getUsername().equals(principal.getName()))
-            throw new OperationNotAllowedException("User with id='" + id + "' cannot be deleted because, it's you!");
         this.repository.deleteById(id);
         return generateResponse(
                 "User with id='" + id + "' has been deleted successfully.",
