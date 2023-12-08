@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 .requestMatchers("/users/**").authenticated()
                 )
                 .authenticationProvider(applicationContext.getBean(AuthenticationProvider.class))
-                .formLogin(formLogin -> {})
+                .formLogin(formLogin -> {
+                })
                 .build();
     }
 
